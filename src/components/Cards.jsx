@@ -6,7 +6,7 @@ const DivContainter = styled.div`
    display: flex;
    flex-wrap: wrap;
 `
-export default function Cards({ characters }) {
+export default function Cards({ characters, onClose }) {
    return (
       <DivContainter>
          {
@@ -22,7 +22,7 @@ export default function Cards({ characters }) {
                     gender={gender} 
                     image={image} 
                     origin={origin.name} 
-                    onClose={() => window.alert('Emulamos que se cierra la card: ' + index)}
+                    onClose={onClose}
                   />
                )
             })
