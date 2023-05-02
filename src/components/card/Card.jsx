@@ -1,4 +1,6 @@
 import style from "./card.module.css";
+import { Link } from "react-router-dom";
+
 
 export default function Card(props) {
 
@@ -8,7 +10,9 @@ export default function Card(props) {
             <button className={style.boton} onClick={() => props.onClose(props.id)}>Close carta {props.id}</button>
          </div>
          <div className={style.info}>
-            <h2>Nombre: {props.name}</h2>
+            <Link to={`/detail/${props.id}`} >
+               <h3 className="card-name">{props.name}</h3>
+            </Link>
             <h2>Estado: {props.status}</h2>
             <h2>Especie: {props.species}</h2>
             <h2>Genero: {props.gender}</h2>

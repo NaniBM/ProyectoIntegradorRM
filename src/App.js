@@ -6,6 +6,9 @@ import SearchBar from './components/SearchBar.jsx';
 // import character, { Rick } from './data.js';
 import axios from 'axios';
 import data from './data';
+import { Routes, Route } from "react-router-dom";
+import About from './components/about/About';
+import Detail from './components/detail/Detail';
 
 
 function App() {
@@ -31,12 +34,20 @@ function App() {
       const newCharacters = characters.filter(char => char.id !== id);
       setCharacters(newCharacters)
    }
-   
+
    return (
       <div className='App'>
-         <Nav onSearch={onSearch}/> 
-         <Cards characters={characters} onClose={onClose}/>
-         <button onClick={() => setCharacters(allChar)}> Reset </button>
+         <Nav onSearch={onSearch}/>
+         <Routes>
+            <Route path = "/detail/:id" element={<Detail/>}></Route>
+            <Route path = "/home" element={
+               <Cards
+                  characters={characters}
+                  onClose={onClose} 
+               />}>
+            </Route>
+            <Route path = "/about" element={<About/>}/>
+         </Routes>
       </div>
    );
 }
