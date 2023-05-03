@@ -3,6 +3,10 @@ import { Link }  from "react-router-dom";
 
 
 const Nav = ({onSearch}) => {
+
+//    if (location.pathname === '/') {
+//     return null;
+//  }
     return (
         <div>
             <Link to="/home">
