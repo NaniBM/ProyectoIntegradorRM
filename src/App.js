@@ -15,10 +15,6 @@ import Form from './components/form/Form';
 function App() {
 
    const [characters, setCharacters] = useState([]);
-   const [allChar, setAllChar] = useState([])
-   // const onSearch = (newChar) => {
-   //    setCharacters([...characters, newChar])
-   // }
 
    //Login
    const [access, setAccess] = useState(false)
@@ -39,11 +35,10 @@ function App() {
       axios(`https://rickandmortyapi.com/api/character/${id}`).then(({ data }) => {
          if (data?.name) {
             setCharacters((oldChars) => [...oldChars, data]);
-            setAllChar((oldChars) => [...oldChars, data]);
          } else {
             window.alert('¡No hay personajes con este ID!');
          }
-      }).catch(error => window.alert('Error'));
+      })
    }
 
    function onClose(id) {
@@ -52,9 +47,9 @@ function App() {
    }
    const { pathname } =  useLocation()
 
-   useEffect(() => {
-      !access && navigate('/');
-   }, [access]);
+   // useEffect(() => {
+   //    !access && navigate('/');
+   // }, [access]);
 
    return (
       <div className='App'>
