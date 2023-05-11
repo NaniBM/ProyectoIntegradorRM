@@ -1,39 +1,46 @@
 import { useDispatch, useSelector } from "react-redux"
 import Card from "../card/Card"
-// import styles from './Favorites.module.css'
+import styled from "styled-components"
 import { removeFav } from "../../redux/actions/actions"
+
+const DivContainter = styled.div`
+   display: flex;
+   flex-wrap: wrap;
+`
 
 const Favorites =()=>{
 
-    const dispath = useDispatch()
+    const dispatch = useDispatch()
 
     const myFavorites = useSelector((state)=> state.myFavorites)
     
     const onClose = (id)=>{
-        dispath(removeFav(id))
+        dispatch(removeFav(id))
     }
     
-        return ( 
-            <div >
-                {myFavorites.map( ({id,name,status,species,gender,origin,image}) => {
-                     return(
-                              <Card
-                                 key={id}
-                                 id={id}
-                                 name={name}
-                                 status={status}
-                                 species={species}
-                                 gender={gender}
-                                 origin={origin.name}
-                                 image={image}
-                                 onClose={onClose}
-                              />
-                           ) 
-                        }
-                     )
+   return ( 
+      <div>
+         <DivContainter>
+            {myFavorites.map( ({id,name,status,species,gender,origin,image}) => {
+               return(
+                        <Card
+                           key={id}
+                           id={id}
+                           name={name}
+                           status={status}
+                           species={species}
+                           gender={gender}
+                           origin={origin.name}
+                           image={image}
+                           onClose={onClose}
+                        />
+                     ) 
                   }
-            </div>
-         )
+               )
+            }
+         </DivContainter>
+      </div>
+   )
 }
 
 export default Favorites

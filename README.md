@@ -1,71 +1,127 @@
-# Getting Started with Create React App
+# **💪 HW13 | React Hooks - Integration**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## **🕒 DURACIÓN ESTIMADA**
 
-## Available Scripts
+2 horas
 
-In the project directory, you can run:
+<br />
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<div align="center">
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## **💻 RICK AND MORTY APP 💻**
 
-### `npm test`
+</div>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## **📝 INTRODUCCIÓN**
 
-### `npm run build`
+En esta homework crearemos dos cosas que harán más completa nuestra aplicación 😄.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-  Haremos un **filtrado** para nuestros personajes favoritos. Vamos a filtrar todos los personajes según su género: **`Male`**, **`Female`**, **`Genderless`** y **`unknown`**.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-  Por otro lado haremos un **ordenamiento** para nuestros personajes favoritos. Vamos a ordenar todos los personajes por su **id** (de mayor a menor y viceversa).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<br />
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## **📋 INSTRUCCIONES**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### **👩‍💻 EJERCICIO 1 | Actions**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Dirígete al archivo **`actions`** y crea las siguientes funciones:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. **`filterCards`**: esta función recibe por parámetro un **gender**. Debe retornar una action con el **type** igual a "**FILTER**" y el payload será igual al parámetro recibido.
 
-## Learn More
+2. **`orderCards`**: esta función recibe por parámetro un **orden** (será: **A**: ascendente o **D**: descendente). Debe retornar una action con el **type** igual a "**ORDER**" y el payload será igual al parámetro recibido.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<br />
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+### **👩‍💻 EJERCICIO 2 | Reducer**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Dirígete al archivo **`reducer`** y sigue estos pasos:
 
-### Analyzing the Bundle Size
+1. En tu estado inicial crea una nueva propiedad llamada **allCharacters** que debe ser igual a un arreglo vacío.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+2. Modificaremos el caso **ADD_FAV** de la siguiente manera:
 
-### Making a Progressive Web App
+   -  Dentro de la copia de tu estado global, reemplaza la propiedad **myFavorites** por **allCharacters**.
+   -  Cuando retornes tu estado, agrega la propiedad **`allCharacters`** que también sea igual a la copia en la que agregaste el nuevo personaje.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+   </br >
 
-### Advanced Configuration
+3. Crea un nuevo caso con el nombre "**FILTER**". Aquí debes crear una copia de tu estado global **allCharacters**. A partir de esta copia filtra todos aquellos personajes que tengan el mismo género que recibes por payload. Finalmente retorna una copia de tu estado, pero que la propiedad **myFavorites** sea igual a este filtrado.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+4. Crea un nuevo caso con el nombre "**ORDER**". Aquí vamos a ordenar nuestros personajes favoritos de forma ascendente y descendente. Para esto:
 
-### Deployment
+   -  Crea una copia de tu estado global **allCharacters**.
+   -  Utiliza el método **`sort`** para ordenar tus personajes de acuerdo a su **id**.
+   -  Si el payload es igual a "**A**", los personajes deben ordenarse de menor a mayor.
+   -  Si el payload es igual a "**D**, los personajes deben ordenarse de mayor a menor.
+   -  Finalmente retorna tu estado global y en la propiedad **myFavorites** guarda el ordenamiento que hiciste.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+> [**NOTA**]: investiga en la web cómo funciona el método **`sort`**.
 
-### `npm run build` fails to minify
+<br />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# ProyectoIntegrador
+---
+
+### **👩‍💻 EJERCICIO 3 | Filtro & Ordenamiento**
+
+Dirígete a tu componente **`Favorites`**. Dentro de él deberás:
+
+1. Crea una etiqueta **`select`**. Dentro de este selector:
+
+   -  Crea una etiqueta **`option`** con el atributo **value** igual a **"A"** (ascendente).
+   -  Crea una etiqueta **`option`** con el atributo **value** igual a **"D"** (descendente).
+
+   ```html
+   <option value="Ascendente">Ascendente</option>
+   ```
+
+2. Crea una segunda etiqueta **`select`**. Dentro de este selector deberás:
+
+   -  Crear 4 etiquetas **`option`**. Cada una con su atributo **value** igual a los siguientes valores: **Male**, **Female**, **Genderless** y **unknown**.
+
+   ```html
+   <option value="Male">Male</option>
+   ```
+
+> [**NOTA**]: ten en cuenta que la propiedad **`unknown`** debe escribirse en minúsculas, ya que esa el la forma como proviene de la API.
+
+3. Importa las actions que creaste en esta homework y el hook **`useDispatch`**.
+
+4. Crea una función llamada **handleOrder**. En su interior solo debe despachar la action **`orderCards`** pasándole como argumento **`e.target.value`**.
+
+5. Crea una función llamada **handleFilter**. En su interior solo debe despachar la action **`filterCards`** pasándole como argumento **`e.target.value`**.
+
+6. Agrega el atributo **`onChange`** a las etiquetas **`select`** pasándoles las funciones correspondientes a cada una.
+
+<br />
+
+---
+
+<br />
+
+### **👩‍💻 EJERCICIO 4 | Forzado de render**
+
+Ahora solo nos queda, en el componente **`Favorites`** crear un estado local que se llama **aux** e inicialo en **`false`**.
+
+Una vez creado, dentro del **handleOrder** setea este estado en su valor opuesto.
+
+<br />
+
+A esta altura, tu filtro y ordenamiento debería estar funcionando de la siguiente manera:
+
+<img src="./img/example.gif" alt="" />
+
+<br />
+
+---
+
+## **📌 Extra Credit**
+
+Agrega una opción adicional en el select del filtro para que muestre todos los personajes. Desarrolla la lógica para que ello ocurra.
