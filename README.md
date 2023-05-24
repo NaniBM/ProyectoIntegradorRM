@@ -1,8 +1,8 @@
-# **💪 HW13 | React Hooks - Integration**
+# **💪 HW2 | Web Server - Integration**
 
 ## **🕒 DURACIÓN ESTIMADA**
 
-2 horas
+90 minutos
 
 <br />
 
@@ -16,11 +16,9 @@
 
 ## **📝 INTRODUCCIÓN**
 
-En esta homework crearemos dos cosas que harán más completa nuestra aplicación 😄.
+Hasta este momento hemos construido una Single Page Aplication por el lado del Front-End. Ahora llego la hora de construir un servidor que nos permita realizar acciones y comunicar información a nuestra App.
 
--  Haremos un **filtrado** para nuestros personajes favoritos. Vamos a filtrar todos los personajes según su género: **`Male`**, **`Female`**, **`Genderless`** y **`unknown`**.
-
--  Por otro lado haremos un **ordenamiento** para nuestros personajes favoritos. Vamos a ordenar todos los personajes por su **id** (de mayor a menor y viceversa).
+En esta homework vamos a estructurar nuestro proyecto por el lado del Back-End, crear nuestro primer servidor y conectar Front-End con este.
 
 <br />
 
@@ -28,100 +26,105 @@ En esta homework crearemos dos cosas que harán más completa nuestra aplicació
 
 ## **📋 INSTRUCCIONES**
 
-### **👩‍💻 EJERCICIO 1 | Actions**
+### **👩‍💻 EJERCICIO 1 | Estructuración**
 
-Dirígete al archivo **`actions`** y crea las siguientes funciones:
+Dirígete al directorio en el que tienes tu proyecto **`Rick & Morty`** y ábrelo en tu VSC.
 
-1. **`filterCards`**: esta función recibe por parámetro un **gender**. Debe retornar una action con el **type** igual a "**FILTER**" y el payload será igual al parámetro recibido.
+1. En la raíz de tu proyecto crea una carpeta llamada **`Client`**. Todo el contenido trabajado durante el Módulo 2 guárdalo dentro de esta carpeta.
 
-2. **`orderCards`**: esta función recibe por parámetro un **orden** (será: **A**: ascendente o **D**: descendente). Debe retornar una action con el **type** igual a "**ORDER**" y el payload será igual al parámetro recibido.
+2. Crea una segunda carpeta al mismo nivel **`Server`**. Dentro de esta crea una carpeta con el nombre **src** y otra con el nombre **test**.
+
+3. Dentro de la carpeta **src** crea lo siguiente:
+
+   -  Un archivo llamado **`index.js`**.
+   -  Una carpeta llamada **`controllers`**.
+   -  Una carpeta llamada **`routes`**.
+   -  Una carpeta llamada **`utils`**.
+
+4. Copia el archivo [**data.js**](./data.js) que se encuentra en esta carpeta y pégalo dentro de tu pryecto en la carpeta **utils**.
+
+</br >
+
+---
+
+### **👩‍💻 EJERCICIO 2 | Configuración**
+
+En la carpeta raíz de tu Back-End tendrás que ejecutar el comando:
+
+```bash
+    npm init
+```
+
+De esta manera crearás un archivo **`package.json`**. En este solo deberás instalar la librería **nodemon** de la siguiente manera:
+
+```bash
+    npm install nodemon
+```
+
+Una vez hecho esto, dentro del objeto **scripts** tienes que dejar el script **`start`** de la siguiente manera:
+
+```json
+    "start": "nodemon ./src/index.js"
+```
 
 <br />
 
 ---
 
-### **👩‍💻 EJERCICIO 2 | Reducer**
+### **👩‍💻 EJERCICIO 3 | Servidor**
 
-Dirígete al archivo **`reducer`** y sigue estos pasos:
+Dírigete al archivo llamado **`index.js`** que creaste en el ejercicio 1. Dentro de este deberás:
 
-1. En tu estado inicial crea una nueva propiedad llamada **allCharacters** que debe ser igual a un arreglo vacío.
+1. Importar **http** desde el módulo **`http`**.
 
-2. Modificaremos el caso **ADD_FAV** de la siguiente manera:
+2. A partir de **http** crea y levanta un servidor en el puerto **3001**.
 
-   -  Dentro de la copia de tu estado global, reemplaza la propiedad **myFavorites** por **allCharacters**.
-   -  Cuando retornes tu estado, agrega la propiedad **`allCharacters`** que también sea igual a la copia en la que agregaste el nuevo personaje.
+3. Copia y pega la siguiente línea dentro del callback de tu servidor
 
-   </br >
-
-3. Crea un nuevo caso con el nombre "**FILTER**". Aquí debes crear una copia de tu estado global **allCharacters**. A partir de esta copia filtra todos aquellos personajes que tengan el mismo género que recibes por payload. Finalmente retorna una copia de tu estado, pero que la propiedad **myFavorites** sea igual a este filtrado.
-
-4. Crea un nuevo caso con el nombre "**ORDER**". Aquí vamos a ordenar nuestros personajes favoritos de forma ascendente y descendente. Para esto:
-
-   -  Crea una copia de tu estado global **allCharacters**.
-   -  Utiliza el método **`sort`** para ordenar tus personajes de acuerdo a su **id**.
-   -  Si el payload es igual a "**A**", los personajes deben ordenarse de menor a mayor.
-   -  Si el payload es igual a "**D**, los personajes deben ordenarse de mayor a menor.
-   -  Finalmente retorna tu estado global y en la propiedad **myFavorites** guarda el ordenamiento que hiciste.
-
-> [**NOTA**]: investiga en la web cómo funciona el método **`sort`**.
-
-<br />
-
----
-
-### **👩‍💻 EJERCICIO 3 | Filtro & Ordenamiento**
-
-Dirígete a tu componente **`Favorites`**. Dentro de él deberás:
-
-1. Crea una etiqueta **`select`**. Dentro de este selector:
-
-   -  Crea una etiqueta **`option`** con el atributo **value** igual a **"A"** (ascendente).
-   -  Crea una etiqueta **`option`** con el atributo **value** igual a **"D"** (descendente).
-
-   ```html
-   <option value="Ascendente">Ascendente</option>
+   ```js
+   res.setHeader('Access-Control-Allow-Origin', '*');
    ```
 
-2. Crea una segunda etiqueta **`select`**. Dentro de este selector deberás:
+4. Crea un condicional que verfique si la **url** incluye el string "**`/rickandmorty/character`**". En el caso de que si lo haga deberás obtener el **id** del personaje que te llega por la **url**. Luego de obtener el **id**, búscalo dentro del archivo **`data.js`** (deberás importar el archivo). Ten en cuenta que el **id** de la url es un string, y los **id** de los personajes son números.
 
-   -  Crear 4 etiquetas **`option`**. Cada una con su atributo **value** igual a los siguientes valores: **Male**, **Female**, **Genderless** y **unknown**.
+> [**NOTA**]: la url te llegará con la siguiente estructura. Ejemplo: **`/rickandmorty/character/:id`**. Piensa en una lógica que te permita obtener el **id** del final.
 
-   ```html
-   <option value="Male">Male</option>
-   ```
-
-> [**NOTA**]: ten en cuenta que la propiedad **`unknown`** debe escribirse en minúsculas, ya que esa el la forma como proviene de la API.
-
-3. Importa las actions que creaste en esta homework y el hook **`useDispatch`**.
-
-4. Crea una función llamada **handleOrder**. En su interior solo debe despachar la action **`orderCards`** pasándole como argumento **`e.target.value`**.
-
-5. Crea una función llamada **handleFilter**. En su interior solo debe despachar la action **`filterCards`** pasándole como argumento **`e.target.value`**.
-
-6. Agrega el atributo **`onChange`** a las etiquetas **`select`** pasándoles las funciones correspondientes a cada una.
+5. Envía como respuesta un JSON que contenga al personaje.
 
 <br />
 
 ---
 
+### **👩‍💻 EJERCICIO 4 | Front & Back**
+
+1. Abre tu proyecto en la carpeta **`Client`** y dirígete al archivo **`App.js`** en el que realizarás un pequeño cambio.
+
+2. Busca tu función **`onSearch`**. Deberás reemplazar la url a la que se le está haciendo la petición:
+
+   -  **URL anitgua**: "**https://rickandmortyapi.com/api/character/${id}**".
+   -  **URL por la que debes reemplazar**: "**http://localhost:3001/rickandmorty/character/${id}**".
+
+3. Ahora dirígete a tu componente **`Detail`** . Aquí tienes un **`useEffect`** que también está haciendo una petición a la API, por lo que debemos hacer el mismo cambio que antes:
+
+   -  **URL anitgua**: "**https://rickandmortyapi.com/api/character/${id}**".
+   -  **URL por la que debes reemplazar**: "**http://localhost:3001/rickandmorty/character/${id}**".
+
+> **[NOTA]:** recuerda agregar el **id** como parámetro al final.
+
 <br />
 
-### **👩‍💻 EJERCICIO 4 | Forzado de render**
+---
 
-Ahora solo nos queda, en el componente **`Favorites`** crear un estado local que se llama **aux** e inicialo en **`false`**.
+### **👀 ¡COMPROBEMOS NUESTRO TRABAJO!**
 
-Una vez creado, dentro del **handleOrder** setea este estado en su valor opuesto.
+Ahora comprobaremos que todo funciona correctamente. Para esto:
 
-<br />
+1. Abre dos terminales. En una deberás levantar tu proyecto del lado Front-End, y en la otra levantar tu proyecto en el lado Back-End.
 
-A esta altura, tu filtro y ordenamiento debería estar funcionando de la siguiente manera:
+2. Una vez que todo esté arriba, intenta utilizar tu aplicación. Trae personajes e ingresa a sus detalles para chequear que no haya ningún error.
+
+> [**NOTA**]: solo podrás buscar a los personajes con id **1**, **2**, **3**, **4** y **5**, ya que estos son los que tienes guardados en tu archivo **`data.js`**.
+
+</br >
 
 <img src="./img/example.gif" alt="" />
-
-<br />
-
----
-
-## **📌 Extra Credit**
-
-Agrega una opción adicional en el select del filtro para que muestre todos los personajes. Desarrolla la lógica para que ello ocurra.
