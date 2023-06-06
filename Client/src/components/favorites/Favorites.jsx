@@ -32,7 +32,6 @@ const Favorites =()=>{
       // setAux(!aux)
    }
    
-
    return ( 
       <div>
          <div>

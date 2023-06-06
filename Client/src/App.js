@@ -24,29 +24,54 @@ function App() {
 
    const navigate = useNavigate();
 
-   function login(userData) {
-      const { email, password } = userData;
-      const URL = 'http://localhost:3001/rickandmorty/login/';
-      axios(URL + `?email=${email}&password=${password}`).then(({ data }) => {
+   // function login(userData) {
+   //    const { email, password } = userData;
+   //    const URL = 'http://localhost:3001/rickandmorty/login/';
+   //    axios(URL + `?email=${email}&password=${password}`).then(({ data }) => {
+   //       const { access } = data;
+   //       setAccess(data);
+   //       access && navigate('/home');
+   //    });
+   // }
+
+   // const login = async(userData) => {
+   //    try {
+   //       const { email, password } = userData;
+   //       const URL = 'http://localhost:3001/rickandmorty/login/'
+   //       axios(URL + `?email=${email}&password=${password}`)
+
+
+   //    } catch (error) {
+         
+   //    }
+   // }
+   async function login(userData) {
+      try {
+         const { email, password } = userData;
+         const URL = 'http://localhost:3001/rickandmorty/login/';
+         const { data } = await axios(URL + `?email=${email}&password=${password}`)
          const { access } = data;
          setAccess(data);
-         access && navigate('/home');
-      });
+         access ? navigate('/home'): window.alert("User or pass invalid")
+      } catch (error) {
+         console.log(error)
+      }
    }
-   
-   function onSearch(id) {
-      axios(`http://localhost:3001/rickandmorty/character/${id}`).then(({ data }) => {
-         if (data?.name) {
-            setCharacters((oldChars) => [...oldChars, data]);
-         } else {
-            window.alert('¡No hay personajes con este ID!');
-         }
-      }).catch(error => {
-         console.log(error.message)
-         window.alert('ERROR');
+
+   async function onSearch(id) {
+      try {
+         const { data } = await axios(`http://localhost:3001/rickandmorty/character/${id}`)
+         setCharacters((oldChars) => [...oldChars, data]);
+      } catch (error) {
          window.alert(error.response.data);
-      })
+      }
    }
+
+   // function onSearch(id) {
+   //    axios(`http://localhost:3001/rickandmorty/character/${id}`).then(({ data }) => {
+   //    }).catch(error => {
+   //    })
+   // }
 
    function onClose(id) {
       const newCharacters = characters.filter(char => char.id !== id);
