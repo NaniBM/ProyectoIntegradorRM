@@ -12,5 +12,5 @@ const deleteFav = (req,res)=> {
     });
     res.json(myFavorites);
 }
-// test
+
 module.exports = {postFav, deleteFav }
