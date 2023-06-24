@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
          },
-         genre: {
+         gender: {
             type: DataTypes.ENUM,
             values: ['Female', 'Male', 'Genderless', 'unknown'],
             allowNull: false,
